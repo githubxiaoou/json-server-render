@@ -27,11 +27,10 @@ dbFiles.forEach((file) => {
     const fileName = path.basename(file, ".json");
     apiData[fileName] = json;
 
-    // 为每个 key 创建二级路由 /api/<file>/<key>
+    // 为每个 key 创建 RESTful router 并挂载到 /api/<file>
     Object.keys(json).forEach((key) => {
-      server.get(`/api/${fileName}/${key}`, (req, res) => {
-        res.json(json[key]);
-      });
+      const router = jsonServer.router({ [key]: json[key] });
+      server.use(`/api/${fileName}`, router);
     });
   }
 });
