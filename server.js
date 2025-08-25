@@ -1,11 +1,14 @@
 const jsonServer = require("json-server");
 const fs = require("fs");
 const path = require("path");
+const cors = require("cors");
 
 const server = jsonServer.create();
 const middlewares = jsonServer.defaults();
 
 const PORT = process.env.PORT || 3000;
+
+server.use(cors()); // 允许跨域
 
 // 读取 data 文件夹
 const jsonDir = path.join(__dirname, "data");
