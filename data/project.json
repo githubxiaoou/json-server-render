@@ -1,0 +1,58 @@
+{
+  "projects": [
+    {
+      "id": "dojo-blog",
+      "title": "Blog 应用",
+      "description": "一个现代化的博客应用，支持文章发布、CRUD等功能",
+      "url": "https://githubxiaoou.github.io/blog-demo-react-ts/",
+      "githubUrl": "https://github.com/githubxiaoou/blog-demo-react-ts",
+      "tags": ["React", "TypeScript"],
+      "featured": true,
+      "stars": 2324,
+      "views": 13213
+    },
+    {
+      "id": "wordle-lingo",
+      "title": "Wordle 游戏",
+      "description": "一个现代化的 Wordle 猜单词游戏，支持无限畅玩",
+      "url": "https://githubxiaoou.github.io/react-wordle-ts/",
+      "githubUrl": "https://github.com/githubxiaoou/React-Wordle-ts/tree/dev",
+      "tags": ["React", "TypeScript", "Socket.io"],
+      "featured": true,
+      "stars": 1228,
+      "views": 20348
+    },
+    {
+      "id": "ninja-merch",
+      "title": "ninja商城",
+      "description": "一个现代化的电商平台，支持商品浏览、购物车和结算功能",
+      "url": "https://githubxiaoou.github.io/solid-js-tutorial/",
+      "githubUrl": "https://github.com/githubxiaoou/solid-js-tutorial/",
+      "tags": ["Solidjs", "TypeScript"],
+      "featured": true,
+      "stars": 1282,
+      "views": 12048
+    },
+    {
+      "id": "mario-club",
+      "title": "Marioclub",
+      "description": "一个响应式UI应用，拖动改变浏览器宽度来展示Mario主题的各种组件和布局",
+      "url": "https://githubxiaoou.github.io/html-and-css-demo/",
+      "githubUrl": "https://github.com/githubxiaoou/html-and-css-demo",
+      "tags": ["HTML5", "CSS3"],
+      "featured": false,
+      "stars": 128,
+      "views": 2048
+    },
+    {
+      "id": "portfolio",
+      "title": "个人作品集",
+      "description": "响应式个人作品集网站，展示项目和技术栈",
+      "url": "https://githubxiaoou.github.io/demo-overview/",
+      "githubUrl": "https://github.com/githubxiaoou/demo-overview",
+      "tags": ["React", "TypeScript", "Vite"],
+      "stars": 78,
+      "views": 1234
+    }
+  ]
+}
