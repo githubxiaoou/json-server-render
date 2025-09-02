@@ -53,6 +53,16 @@
       "tags": ["React", "TypeScript", "Vite"],
       "stars": 78,
       "views": 1234
+    },
+    {
+      "id": "tic-tac-toe",
+      "title": "井字棋",
+      "description": "一个简单的井字棋游戏，支持单人和双人对战",
+      "url": "https://github.com/githubxiaoou/tutorial-tic-tac-toe",
+      "githubUrl": "https://github.com/githubxiaoou/demo-overview",
+      "tags": ["React", "JavaScript", "CRA"],
+      "stars": 12,
+      "views": 321
     }
   ]
 }
