@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GraphiQL - GraphQL IDE</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .graphiql-container {
+      height: 100vh;
+    }
+    .header {
+      background: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    .header p {
+      margin: 10px 0 0 0;
+      opacity: 0.9;
+    }
+    .loading {
+      text-align: center;
+      padding: 50px;
+      font-size: 18px;
+      color: #666;
+    }
+    .fallback {
+      text-align: center;
+      padding: 50px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      margin: 20px;
+    }
+    .fallback a {
+      color: #e91e63;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🔮 GraphiQL</h1>
+    <p>GraphQL 查询和测试工具</p>
+  </div>
+  
+  <div id="graphiql" class="graphiql-container">
+    <div class="loading">正在加载 GraphiQL...</div>
+  </div>
+
+  <!-- 使用更稳定的 CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/graphiql@2.4.7/graphiql.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/graphiql@2.4.7/graphiql.css" />
+
+  <script>
+    // 等待所有资源加载完成
+    window.addEventListener('load', function() {
+      try {
+        // 检查 GraphiQL 是否可用
+        if (typeof GraphiQL === 'undefined') {
+          showFallback('GraphiQL 库加载失败，请检查网络连接');
+          return;
+        }
+
+        // 创建完全自定义的 fetcher
+        const fetcher = GraphiQL.createFetcher({
+          url: '/graphql',
+          // 完全自定义的请求处理
+          fetch: async (url, options) => {
+            console.log('GraphiQL fetcher called with:', { url, options });
+            
+            // 确保请求头正确
+            const headers = {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            };
+
+            // 处理请求体
+            let body = null;
+            if (options.body) {
+              try {
+                const parsedBody = JSON.parse(options.body);
+                console.log('Parsed request body:', parsedBody);
+                
+                // 重新构建请求体，确保格式正确
+                body = JSON.stringify({
+                  query: parsedBody.query || '',
+                  variables: parsedBody.variables || {},
+                  operationName: parsedBody.operationName || null
+                });
+                
+                console.log('Reconstructed request body:', body);
+              } catch (e) {
+                console.error('Error parsing request body:', e);
+                body = options.body;
+              }
+            }
+
+            // 创建新的请求选项
+            const fetchOptions = {
+              method: 'POST',
+              headers: headers,
+              body: body
+            };
+
+            console.log('Final fetch options:', fetchOptions);
+
+            // 发送请求
+            const response = await fetch(url, fetchOptions);
+            console.log('Response status:', response.status);
+            
+            // 检查响应
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            return response;
+          }
+        });
+
+        // 渲染 GraphiQL
+        const root = ReactDOM.createRoot(document.getElementById('graphiql'));
+        root.render(React.createElement(GraphiQL, {
+          fetcher: fetcher,
+          defaultQuery: `# 欢迎使用 GraphiQL!
+# 这是一个 GraphQL 查询示例
+
+query {
+  blogs {
+    id
+    title
+    author
+  }
+  products {
+    id
+    title
+    price
+  }
+}`,
+          defaultVariables: `{
+  "example": "变量示例"
+}`,
+          defaultHeaders: `{
+  "Content-Type": "application/json"
+}`,
+          // 添加更多配置选项
+          showQueryTitle: true,
+          showQueryFacts: true,
+          showQueryPlan: false,
+          showQuerySearch: true,
+          showQueryToolbar: true,
+          showQuerySettings: true,
+          showQueryHistory: true,
+          showQueryDocumentation: true,
+          showQueryExplorer: true,
+          showQuerySchema: true,
+          showQueryVariables: true,
+          showQueryHeaders: true,
+          showQueryResults: true,
+          showQueryError: true,
+          showQueryLoading: true,
+          showQuerySuccess: true,
+        }));
+
+        console.log('GraphiQL 初始化成功');
+
+      } catch (error) {
+        console.error('GraphiQL 初始化失败:', error);
+        showFallback(`GraphiQL 初始化失败: ${error.message}`);
+      }
+    });
+
+    function showFallback(message) {
+      document.getElementById('graphiql').innerHTML = `
+        <div class="fallback">
+          <h3>❌ ${message}</h3>
+          <p>建议使用我们的简单测试工具，它更稳定且功能完整</p>
+          <p><a href="/graphql-test">🚀 打开简单测试工具</a></p>
+          <button onclick="location.reload()" style="padding: 10px 20px; background: #e91e63; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 15px;">
+            刷新页面重试
+          </button>
+        </div>
+      `;
+    }
+
+    // 添加全局错误处理
+    window.addEventListener('error', function(e) {
+      console.error('Global error:', e.error);
+      if (e.error && e.error.message && e.error.message.includes('GraphiQL')) {
+        showFallback('GraphiQL 运行时错误，请使用简单测试工具');
+      }
+    });
+  </script>
+</body>
+</html>

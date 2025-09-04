@@ -1,77 +1,61 @@
-const jsonServer = require("json-server");
-const fs = require("fs");
-const path = require("path");
+const express = require("express");
 const cors = require("cors");
+const jsonServer = require("json-server");
+const path = require("path");
 
-const server = jsonServer.create();
-const middlewares = jsonServer.defaults();
+// 导入自定义模块
+const createGraphQLMiddleware = require("./graphql/middleware");
+const createRESTMiddleware = require("./graphql/restMiddleware");
+const createHomeTemplate = require("./graphql/homeTemplate");
 
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-server.use(cors()); // 允许跨域
+// 中间件
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// 读取 data 文件夹
-const jsonDir = path.join(__dirname, "data");
-const dbFiles = fs.readdirSync(jsonDir);
+// 设置 GraphQL 路由
+app.use("/graphql", createGraphQLMiddleware());
 
-// 存储数据
-// apiData[fileName][key] = value
-const apiData = {};
+// 设置 REST API 路由
+const apiData = createRESTMiddleware(app);
 
-dbFiles.forEach((file) => {
-  if (file.endsWith(".json")) {
-    const filePath = path.join(jsonDir, file);
-    const raw = fs.readFileSync(filePath, "utf-8");
-    const json = JSON.parse(raw);
-
-    const fileName = path.basename(file, ".json");
-    apiData[fileName] = json;
-
-    // 为每个 key 创建 RESTful router 并挂载到 /api/<file>
-    Object.keys(json).forEach((key) => {
-      const router = jsonServer.router({ [key]: json[key] });
-      server.use(`/api/${fileName}`, router);
-    });
-  }
+// GraphiQL 界面
+app.get("/graphiql", (req, res) => {
+  res.sendFile(path.join(__dirname, "graphql", "graphiql.html"));
 });
 
-// 总览页
-server.get("/", (req, res) => {
-  let html = `
-    <html>
-    <head>
-      <title>JSON Server Resources</title>
-      <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        h1 { margin-bottom: 20px; }
-        h2 { margin-top: 15px; }
-        ul { list-style: none; padding-left: 0; }
-        li { margin-bottom: 5px; }
-        a { color: #007bff; text-decoration: underline; }
-      </style>
-    </head>
-    <body>
-      <h1>JSON Server Resources</h1>
-  `;
+// 简单 GraphQL 测试界面
+app.get("/graphql-test", (req, res) => {
+  res.sendFile(path.join(__dirname, "graphql", "simple-test.html"));
+});
 
-  Object.keys(apiData).forEach((file) => {
-    html += `<h2>${file}</h2><ul>`;
-    Object.keys(apiData[file]).forEach((key) => {
-      html += `<li><a href="/api/${file}/${key}" target="_blank">${key}</a></li>`;
-    });
-    html += `</ul>`;
+// 主页路由
+app.get("/", (req, res) => {
+  res.send(createHomeTemplate(apiData));
+});
+
+// 健康检查端点
+app.get("/health", (req, res) => {
+  res.json({
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    services: {
+      rest: "active",
+      graphql: "active",
+    },
   });
-
-  html += `
-    </body>
-    </html>
-  `;
-
-  res.send(html);
 });
 
-server.use(middlewares);
-
-server.listen(PORT, () => {
-  console.log(`🚀 JSON Server is running on port ${PORT}`);
+// 启动服务器
+app.listen(PORT, () => {
+  console.log("🚀 综合 API Demo 服务器启动成功!");
+  console.log(`📍 服务地址: http://localhost:${PORT}`);
+  console.log(`🔮 GraphQL: http://localhost:${PORT}/graphql`);
+  console.log(`🎨 GraphiQL: http://localhost:${PORT}/graphiql`);
+  console.log(`📡 REST API: http://localhost:${PORT}/api`);
+  console.log(`🏠 主页: http://localhost:${PORT}`);
+  console.log("✨ 同时支持 REST 和 GraphQL 接口");
 });
