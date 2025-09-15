@@ -35,10 +35,10 @@
     },
     {
       "id": "reading-list",
-      "title": "阅读列表",
+      "title": "我的书单",
       "description": "一个阅读列表应用，支持添加、删除和标记已读书籍",
-      "url": "https://githubxiaoou.github.io/react-reading-list/",
-      "githubUrl": "https://github.com/githubxiaoou/react-reading-list",
+      "url": "https://htmx-for-beginners.onrender.com/",
+      "githubUrl": "https://github.com/githubxiaoou/htmx-for-beginners",
       "tags": ["HTMX", "Express", "Nodejs"],
       "featured": true,
       "stars": 512,
