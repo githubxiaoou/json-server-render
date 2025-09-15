@@ -34,6 +34,17 @@
       "views": 12048
     },
     {
+      "id": "reading-list",
+      "title": "阅读列表",
+      "description": "一个阅读列表应用，支持添加、删除和标记已读书籍",
+      "url": "https://githubxiaoou.github.io/react-reading-list/",
+      "githubUrl": "https://github.com/githubxiaoou/react-reading-list",
+      "tags": ["HTMX", "Express", "Nodejs"],
+      "featured": true,
+      "stars": 512,
+      "views": 7890
+    },
+    {
       "id": "mario-club",
       "title": "Marioclub",
       "description": "一个响应式UI应用，拖动改变浏览器宽度来展示Mario主题的各种组件和布局",
