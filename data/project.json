@@ -6,7 +6,10 @@
       "description": "一个现代化的博客应用，支持文章发布、CRUD等功能",
       "url": "https://githubxiaoou.github.io/blog-demo-react-ts/",
       "githubUrl": "https://github.com/githubxiaoou/blog-demo-react-ts",
-      "tags": ["React", "TypeScript"],
+      "tags": [
+        "React",
+        "TypeScript"
+      ],
       "featured": true,
       "stars": 2324,
       "views": 13213
@@ -17,7 +20,11 @@
       "description": "一个现代化的 Wordle 猜单词游戏，支持无限畅玩",
       "url": "https://githubxiaoou.github.io/react-wordle-ts/",
       "githubUrl": "https://github.com/githubxiaoou/React-Wordle-ts/tree/dev",
-      "tags": ["React", "TypeScript", "Socket.io"],
+      "tags": [
+        "React",
+        "TypeScript",
+        "Socket.io"
+      ],
       "featured": true,
       "stars": 1228,
       "views": 20348
@@ -28,7 +35,10 @@
       "description": "一个现代化的电商平台，支持商品浏览、购物车和结算功能",
       "url": "https://githubxiaoou.github.io/solid-js-tutorial/",
       "githubUrl": "https://github.com/githubxiaoou/solid-js-tutorial/",
-      "tags": ["Solidjs", "TypeScript"],
+      "tags": [
+        "Solidjs",
+        "TypeScript"
+      ],
       "featured": true,
       "stars": 1282,
       "views": 12048
@@ -37,9 +47,13 @@
       "id": "reading-list",
       "title": "我的书单",
       "description": "一个阅读列表应用，支持添加、删除和标记已读书籍",
-      "url": "https://htmx-for-beginners.onrender.com/",
+      "url": "https://htmx-for-beginners.vercel.app/",
       "githubUrl": "https://github.com/githubxiaoou/htmx-for-beginners",
-      "tags": ["HTMX", "Express", "Nodejs"],
+      "tags": [
+        "HTMX",
+        "Express",
+        "Nodejs"
+      ],
       "featured": true,
       "stars": 512,
       "views": 7890
@@ -50,7 +64,10 @@
       "description": "一个响应式UI应用，拖动改变浏览器宽度来展示Mario主题的各种组件和布局",
       "url": "https://githubxiaoou.github.io/html-and-css-demo/",
       "githubUrl": "https://github.com/githubxiaoou/html-and-css-demo",
-      "tags": ["HTML5", "CSS3"],
+      "tags": [
+        "HTML5",
+        "CSS3"
+      ],
       "featured": false,
       "stars": 128,
       "views": 2048
@@ -61,7 +78,11 @@
       "description": "响应式个人作品集网站，展示项目和技术栈",
       "url": "https://githubxiaoou.github.io/demo-overview/",
       "githubUrl": "https://github.com/githubxiaoou/demo-overview",
-      "tags": ["React", "TypeScript", "Vite"],
+      "tags": [
+        "React",
+        "TypeScript",
+        "Vite"
+      ],
       "stars": 78,
       "views": 1234
     },
@@ -71,7 +92,11 @@
       "description": "一个简单的井字棋游戏，支持单人和双人对战",
       "url": "https://githubxiaoou.github.io/tutorial-tic-tac-toe/",
       "githubUrl": "https://github.com/githubxiaoou/tutorial-tic-tac-toe",
-      "tags": ["React", "JavaScript", "CRA"],
+      "tags": [
+        "React",
+        "JavaScript",
+        "CRA"
+      ],
       "stars": 12,
       "views": 321
     }
